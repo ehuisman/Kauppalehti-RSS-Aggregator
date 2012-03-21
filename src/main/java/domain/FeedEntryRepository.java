@@ -55,7 +55,7 @@ public class FeedEntryRepository {
     private static class NewestFirst extends Ordering<SyndEntry> {
         @Override
         public int compare(SyndEntry first, SyndEntry second) {
-            return -Longs.compare(first.getPublishedDate().getTime(), second.getPublishedDate().getTime());
+            return Longs.compare(second.getPublishedDate().getTime(), first.getPublishedDate().getTime());
         }
     }
 }
