@@ -1,15 +1,12 @@
 package config;
 
-import domain.FeedEntryRepository;
 import fetcher.FeedFetcher;
+import net.sf.ehcache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCache;
-import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableCaching
@@ -21,8 +18,14 @@ public class CacheConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        SimpleCacheManager cacheManager = new SimpleCacheManager();
-        cacheManager.setCaches(Arrays.asList(new ConcurrentMapCache("default")));
+        EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+        cacheManager.setCacheManager(initEhCacheManager());
         return cacheManager;
+    }
+
+    private net.sf.ehcache.CacheManager initEhCacheManager() {
+        net.sf.ehcache.CacheManager cm = net.sf.ehcache.CacheManager.create();
+        cm.addCache(new Cache("feeds", 4, false, false, 600, 0));
+        return cm;
     }
 }
