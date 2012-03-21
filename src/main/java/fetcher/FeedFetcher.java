@@ -13,6 +13,7 @@ import java.util.List;
 
 public class FeedFetcher {
     @SuppressWarnings("unchecked")
+    @Cacheable("default")
     public List<SyndEntry> fetchFrom(String url) throws FeedException, IOException {
         return new SyndFeedInput().build(new XmlReader(new URL(url))).getEntries();
     }
