@@ -6,8 +6,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
+import org.springframework.web.servlet.view.feed.AbstractRssFeedView;
+import view.RssFeedView;
 
 @Configuration
 @EnableWebMvc
@@ -15,15 +18,23 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Import(CacheConfig.class)
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
-    public InternalResourceViewResolver configureInternalResourceViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        return resolver;
+    public BeanNameViewResolver configureBeanNameViewResolver() {
+        return new BeanNameViewResolver();
+    }
+
+    @Bean(name = "rss")
+    public AbstractRssFeedView feedView() {
+        return new RssFeedView();
     }
 
     @Bean
     public FeedEntryRepository feedEntryRepository() {
         return new FeedEntryRepository();
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+
 }
