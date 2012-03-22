@@ -27,7 +27,7 @@ public class RssControllerTest {
     public void testHome() throws Exception {
         when(repo.fetchEntries()).thenReturn(Lists.<SyndEntry>newArrayList(new SyndEntryImpl()));
         ModelAndView result = controller.home();
-        assertEquals("Unexpected view name", result.getViewName(), "home");
+        assertEquals("Unexpected view name", result.getViewName(), "rss");
         assertTrue("Property \"entries\" missing from model", result.getModel().containsKey("entries"));
     }
 }
