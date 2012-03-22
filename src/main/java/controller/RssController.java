@@ -1,4 +1,4 @@
-package web;
+package controller;
 
 import domain.FeedEntryRepository;
 import org.springframework.stereotype.Controller;
@@ -9,13 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 
 @Controller
-public class HomeController {
+public class RssController {
     @Inject
     private FeedEntryRepository repo;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home() throws Exception {
-        return new ModelAndView("home", "entries", repo.fetchEntries());
+        return new ModelAndView("rss", "entries", repo.fetchEntries());
     }
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "web")
+@ComponentScan(basePackages = "controller")
 @Import(CacheConfig.class)
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
