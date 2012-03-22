@@ -74,10 +74,10 @@
                             var itemHtml = o.html.replace(/{title}/, item.find('title').text());
                             itemHtml = itemHtml.replace(/{text}/, item.find('description').text());
                             itemHtml = itemHtml.replace(/{link}/, item.find('guid').text());
-                            itemHtml = itemHtml.replace(/{content}/, item.find('content\\:encoded').text());
-                            itemHtml = itemHtml.replace(/{timestamp}/, item.find('dc\\:date').text());
+                            itemHtml = itemHtml.replace(/{content}/, item.filterNode('content:encoded').text());
+                            itemHtml = itemHtml.replace(/{timestamp}/, item.filterNode('dc:date').text());
                             itemHtml = itemHtml.replace(/{pubDate}/, item.find('pubDate').text());
-                            itemHtml = itemHtml.replace(/{author}/, item.find('dc\\:creator').text());
+                            itemHtml = itemHtml.replace(/{author}/, item.filterNode('dc:creator').text());
 
                             jQuery(c).append(jQuery('<' + o.wrapper + '>').append(itemHtml));
 
